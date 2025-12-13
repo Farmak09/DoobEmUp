@@ -26,7 +26,9 @@ public class CanvasActivationTransition : MonoBehaviour
     private float currentTime = 0;
 
     private Vector3 initialPosition = new();
+    private Vector3 initialScale = new();
     private Vector3 movementVector = new();
+    private Vector3 sizeVector = new();
 
     public Vector3 finalPosition = new();
     public Vector3 finalScale = new();
@@ -53,6 +55,8 @@ public class CanvasActivationTransition : MonoBehaviour
 
             fadingUIElements.Add(elm);
         }
+        initialScale = transform.localScale;
+        sizeVector = finalScale - initialScale;
         initialPosition = transform.position;
         movementVector = finalPosition - initialPosition;
     }
@@ -88,6 +92,7 @@ public class CanvasActivationTransition : MonoBehaviour
     {
         FadeOutElements();
         MoveToTarget(isOpening);
+        ScaleToSize(isOpening);
 
         currentTime += Time.deltaTime * (isOpening ? 1 : -1);
     }
@@ -104,10 +109,14 @@ public class CanvasActivationTransition : MonoBehaviour
     {
         transform.position += Time.deltaTime * (isOpening ? 1 : -1) * movementVector / fadeTime;
     }
-
+    private void ScaleToSize(bool isOpening)
+    {
+        transform.localScale += Time.deltaTime * (isOpening ? 1 : -1) * sizeVector / fadeTime;
+    }
     private void LockInPosition(bool isOpening)
     {
         transform.position = (isOpening ? finalPosition : initialPosition);
+        transform.localScale = (isOpening ? finalScale : initialScale);
     }
 
     public void TurnOff(bool value)

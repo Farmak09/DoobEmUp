@@ -4,25 +4,15 @@ using UnityEngine;
 public enum GameState
 {
     InGame,
-    Paused,
+    PauseMenu,
+    SettingsMenu,
     MainMenu
 }
 
 public class GameDataManager : MonoBehaviour
 {
-    public static GameDataManager instance;
+    private GameState state = GameState.InGame;
 
-    private GameState state;
-
-    private void Awake()
-    {
-        if(instance == null)
-        {
-            instance = this;
-
-            state = GameState.InGame;
-        }
-    }
 
     public GameState CurrentState() { return state; }
     public void ChangeState(GameState newState) 
