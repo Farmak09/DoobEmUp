@@ -9,6 +9,13 @@ public enum GameState
     MainMenu
 }
 
+public enum Difficulty
+{
+    Easy,
+    Normal,
+    Hard
+}
+
 public class GameDataManager : MonoBehaviour
 {
     private GameState state = GameState.InGame;

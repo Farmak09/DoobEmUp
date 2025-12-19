@@ -7,8 +7,8 @@ public class InputManager : MonoBehaviour
     //info of the types of inputs you have set up
     private InputSystem_Actions userInputs;
 
-    //moving inputs from the action script
-    public InputAction move;
+    //mouse inputs for the player
+    public InputAction press;
 
     //menu inputs from the UI script
     public InputAction pause;
@@ -21,12 +21,12 @@ public class InputManager : MonoBehaviour
 
     private void OnEnable()
     {
-        move = userInputs.Player.Move;
+        press = userInputs.Player.Press;
 
         pause = userInputs.UI.Pause;
 
-       
-        move.Enable();
+
+        press.Enable();
 
         pause.Enable();
         
@@ -34,7 +34,7 @@ public class InputManager : MonoBehaviour
     }
     private void OnDestroy()
     {
-        move.Disable();
+        press.Disable();
 
         pause.Disable();
        
