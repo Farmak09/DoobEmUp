@@ -13,7 +13,10 @@ MonoBehaviour:
   m_Name: PlayerStats
   m_EditorClassIdentifier: 
   movement:
-    maxSpeed: 0.5
-    accel: 0.1
+    maxSpeed: 10
+    accel: 5
   health:
     maxHP: 20
+  weapon:
+    minDamage: 0.1
+    minAttackSpeed: 1

@@ -1,33 +1,23 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class PlayerManager : MonoBehaviour
+public class MovementManager : PlayerElement
 {
-    private InputManager inputManager;
-
-    [SerializeField]
-    private PlayerStats stats;
-
-
-    private void Awake()
-    {
-        inputManager = GetComponent<InputManager>();
-        stats.ResetVariables();
-    }
-
+    // Start is called before the first frame update
     private void Start()
     {
         inputManager.press.started += MouseDown;
         inputManager.press.canceled += MouseUp;
-
     }
-    private void FixedUpdate()
+
+    public override void GameUpdate()
     {
-        if(stats.Controlled)
+        if (stats.Controlled)
         {
             MovePlayer();
         }
     }
+
 
     private void MouseDown(InputAction.CallbackContext context)
     {
@@ -40,16 +30,15 @@ public class PlayerManager : MonoBehaviour
 
                 stats.Controlled = true;
             }
-        }        
+        }
     }
-
 
     private void CursorVisibility(bool value)
     {
         Cursor.visible = value;
     }
     private float MousePosToGameUnits()
-    {        
+    {
         float ret = 10f * Input.mousePosition.x / Camera.main.scaledPixelWidth - 5f;
         if (ret < -5f) ret = -5f;
         if (ret > 5f) ret = 5f;
@@ -59,7 +48,6 @@ public class PlayerManager : MonoBehaviour
     private void MovePlayer()
     {
         float direction = MousePosToGameUnits() - transform.position.x;
-        Debug.Log(MousePosToGameUnits());
         UpdatePosition(stats.GetSpeed(direction));
     }
 
@@ -73,9 +61,5 @@ public class PlayerManager : MonoBehaviour
         CursorVisibility(true);
 
         stats.Controlled = false;
-    }
-    public void PauseStatus(bool value)
-    {
-
     }
 }
