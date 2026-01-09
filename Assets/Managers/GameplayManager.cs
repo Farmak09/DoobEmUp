@@ -6,14 +6,19 @@ public class GameplayManager : MonoBehaviour
 {
     List<GameplayElement> gameElements = new();
 
+    private WaveManager waves;
     public void AddElement(GameplayElement newElement)
     {
         gameElements.Add(newElement);
     }
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
+        waves = GetComponent<WaveManager>();
+    }
 
+    private void Start()
+    {
+        waves.LoadWave(Stage.Tutorial);
     }
 
     // Update is called once per frame

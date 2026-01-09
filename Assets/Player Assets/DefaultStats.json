@@ -1,5 +1,6 @@
 {
   "health": 100,
   "damage": 1,
-  "cadence": 0.5
+  "cadence": 0.5,
+  "speed": 3.5
 }

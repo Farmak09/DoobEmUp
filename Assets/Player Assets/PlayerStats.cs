@@ -7,6 +7,7 @@ public class DefaultStats
     public float health;
     public float damage;
     public float cadence;
+    public float speed;
 }
 [System.Serializable]
 public class MovementVariables
@@ -65,7 +66,8 @@ public class ShootingVariables
     private float minDamage;
     [SerializeField]
     private float minAttackSpeed;
-
+    [SerializeField]
+    private float minProjectileSpeed;
 
     private float _damage;
     public float Damage
@@ -96,11 +98,24 @@ public class ShootingVariables
         }
     }
 
-
+    private float _speed;
+    public float Speed
+    {
+        get { return _speed; }
+    }
+    public void ModifySpeed(float percentage)
+    {
+        _speed *= percentage;
+        if (_speed > minProjectileSpeed)
+        {
+            _speed = minProjectileSpeed;
+        }
+    }
     public void ResetVariables(DefaultStats stats)
     {
         _damage = stats.damage;
         _cadence = stats.cadence;
+        _speed = stats.speed;
     }
 }
 
@@ -134,6 +149,10 @@ public class PlayerStats : ScriptableObject
     public float BulletCadence()
     {
         return weapon.Cadence;
+    }
+    public float BulletSpeed()
+    {
+        return weapon.Speed;
     }
     public void SetToDefault()
     {

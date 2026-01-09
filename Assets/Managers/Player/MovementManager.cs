@@ -39,9 +39,9 @@ public class MovementManager : PlayerElement
     }
     private float MousePosToGameUnits()
     {
-        float ret = 10f * Input.mousePosition.x / Camera.main.scaledPixelWidth - 5f;
-        if (ret < -5f) ret = -5f;
-        if (ret > 5f) ret = 5f;
+        float ret = 12f * Input.mousePosition.x / Camera.main.scaledPixelWidth - 6f;
+        if (ret < -6f) ret = -6f;
+        if (ret > 6f) ret = 6f;
 
         return ret;
     }
