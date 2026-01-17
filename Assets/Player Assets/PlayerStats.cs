@@ -2,7 +2,7 @@ using UnityEngine;
 using System.IO;
 
 [System.Serializable]
-public class DefaultStats
+public class DefaultPlayerStats
 {
     public float health;
     public float damage;
@@ -10,7 +10,7 @@ public class DefaultStats
     public float speed;
 }
 [System.Serializable]
-public class MovementVariables
+public class MovementPlayerVariables
 {
     [SerializeField]
     private float maxSpeed;
@@ -19,7 +19,7 @@ public class MovementVariables
     [SerializeField]
     private float accel;
 
-    public void ResetVariables(DefaultStats stats)
+    public void ResetVariables(DefaultPlayerStats stats)
     {
         speed = 0f;
     }
@@ -46,12 +46,12 @@ public class MovementVariables
 }
 
 [System.Serializable]
-public class HealthVariables
+public class HealthPlayerVariables
 {
     [SerializeField]
     private float maxHP;
     private float currentHP;
-    public void ResetVariables(DefaultStats stats)
+    public void ResetVariables(DefaultPlayerStats stats)
     {
         maxHP = stats.health;
         currentHP = stats.health;
@@ -60,7 +60,7 @@ public class HealthVariables
 }
 
 [System.Serializable]
-public class ShootingVariables
+public class ShootingPlayerVariables
 {
     [SerializeField]
     private float minDamage;
@@ -111,7 +111,7 @@ public class ShootingVariables
             _speed = minProjectileSpeed;
         }
     }
-    public void ResetVariables(DefaultStats stats)
+    public void ResetVariables(DefaultPlayerStats stats)
     {
         _damage = stats.damage;
         _cadence = stats.cadence;
@@ -123,11 +123,11 @@ public class ShootingVariables
 public class PlayerStats : ScriptableObject
 {
     [SerializeField]
-    private MovementVariables movement;
+    private MovementPlayerVariables movement;
     [SerializeField]
-    private HealthVariables health;
+    private HealthPlayerVariables health;
     [SerializeField]
-    private ShootingVariables weapon;
+    private ShootingPlayerVariables weapon;
 
 
     private bool _controlled = false;
@@ -142,21 +142,14 @@ public class PlayerStats : ScriptableObject
         return movement.GetSpeed(direction);
     }
 
-    public float BulletDamage()
+    public ProjectileStats BulletStats()
     {
-        return weapon.Damage;
+        return new ProjectileStats(weapon.Speed, weapon.Cadence, weapon.Damage);
     }
-    public float BulletCadence()
-    {
-        return weapon.Cadence;
-    }
-    public float BulletSpeed()
-    {
-        return weapon.Speed;
-    }
+
     public void SetToDefault()
     {
-        DefaultStats dStats = JsonUtility.FromJson<DefaultStats>(new StreamReader(Global.DEFAULT_STATS_PATH).ReadToEnd());
+        DefaultPlayerStats dStats = JsonUtility.FromJson<DefaultPlayerStats>(new StreamReader(Global.DEFAULT_STATS_PATH).ReadToEnd());
 
         movement.ResetVariables(dStats);
         health.ResetVariables(dStats);

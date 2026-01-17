@@ -24,10 +24,7 @@ public class GameplayManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        for(int i = 0; i < gameElements.Count();i++)
-        {
-            gameElements[i].GameUpdate();
-        }
+        gameElements.ForEach(x => x.GameUpdate());
     }
 }
 

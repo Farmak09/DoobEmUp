@@ -454,9 +454,9 @@ GameObject:
   - component: {fileID: 1020380946}
   - component: {fileID: 1020380945}
   - component: {fileID: 1020380950}
-  - component: {fileID: 1020380951}
   - component: {fileID: 1020380953}
   - component: {fileID: 1020380952}
+  - component: {fileID: 1020380954}
   m_Layer: 6
   m_Name: Capsule
   m_TagString: Untagged
@@ -582,19 +582,6 @@ MonoBehaviour:
     m_Interactions: 
     m_SingletonActionBindings: []
     m_Flags: 0
---- !u!114 &1020380951
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1020380944}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: d7385e5d43a200b47a1ecb46118aeff2, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 7c0f6b1bcf0f0a143be55c02acada2be, type: 2}
 --- !u!114 &1020380952
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -607,7 +594,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 89116ee5398b1a644906b02984c5fcd7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 7c0f6b1bcf0f0a143be55c02acada2be, type: 2}
+  player: {fileID: 0}
 --- !u!114 &1020380953
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -620,9 +607,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a63376dcf7e89924db338afcba16715f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  stats: {fileID: 11400000, guid: 7c0f6b1bcf0f0a143be55c02acada2be, type: 2}
+  player: {fileID: 0}
   weaponCooldown: 0
   projectile: {fileID: 9039293724375340735, guid: 29a2bb6f0ee63a449a2421526a784e90, type: 3}
+--- !u!114 &1020380954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1020380944}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 733951850becafd4885f7ca3bbba935a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inputManager: {fileID: 0}
+  stats: {fileID: 11400000, guid: 7c0f6b1bcf0f0a143be55c02acada2be, type: 2}
 --- !u!1 &2116939659
 GameObject:
   m_ObjectHideFlags: 0

@@ -17,6 +17,7 @@ public class WeaponManager : PlayerElement
 
     [SerializeField] private BulletManager projectile;
 
+    private bool shoot = false;
     public void AddAttributeToWeapon(ProjectileAttributes newAtt)
     {
         activeAttributes.Add(newAtt);
@@ -26,24 +27,33 @@ public class WeaponManager : PlayerElement
     {
         ResetCooldown();
     }
-    public override void GameUpdate()
+    public override void PlayerUpdate()
     {
         weaponCooldown -= Time.deltaTime;
 
         if(weaponCooldown <= 0f)
         {
-            Shoot();
+            shoot = true;
             ResetCooldown();
         }
     }
 
     private void ResetCooldown()
     {
-        weaponCooldown = stats.BulletCadence();
+        weaponCooldown = player.stats.BulletStats().cadence;
     }
 
     private void Shoot()
     {
-        Instantiate(projectile, this.transform.position, this.transform.rotation).InitializeProjectile(stats.BulletSpeed(), activeAttributes);
+        Instantiate(projectile, this.transform.position, this.transform.rotation).InitializeProjectile(player.stats.BulletStats(), activeAttributes);
+    }
+
+    private void LateUpdate()
+    {
+        if (shoot)
+        {
+            Shoot();
+            shoot = false;
+        }
     }
 }

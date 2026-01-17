@@ -6,13 +6,13 @@ public class MovementManager : PlayerElement
     // Start is called before the first frame update
     private void Start()
     {
-        inputManager.press.started += MouseDown;
-        inputManager.press.canceled += MouseUp;
+        player.inputManager.press.started += MouseDown;
+        player.inputManager.press.canceled += MouseUp;
     }
 
-    public override void GameUpdate()
+    public override void PlayerUpdate()
     {
-        if (stats.Controlled)
+        if (player.stats.Controlled)
         {
             MovePlayer();
         }
@@ -28,7 +28,7 @@ public class MovementManager : PlayerElement
             {
                 CursorVisibility(false);
 
-                stats.Controlled = true;
+                player.stats.Controlled = true;
             }
         }
     }
@@ -48,7 +48,7 @@ public class MovementManager : PlayerElement
     private void MovePlayer()
     {
         float direction = MousePosToGameUnits() - transform.position.x;
-        UpdatePosition(stats.GetSpeed(direction));
+        UpdatePosition(player.stats.GetSpeed(direction));
     }
 
     private void UpdatePosition(float speed)
@@ -60,6 +60,6 @@ public class MovementManager : PlayerElement
     {
         CursorVisibility(true);
 
-        stats.Controlled = false;
+        player.stats.Controlled = false;
     }
 }

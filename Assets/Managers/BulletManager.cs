@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public class ProjectileStats
+{
+    public ProjectileStats(float speed, float cadence, float damage) {this.speed = speed; this.cadence = cadence; this.damage = damage;}
 
+    public float speed { get; private set; }
+    public float cadence { get; private set; }
+    public float damage { get; private set; }
+}
 
 public class BulletManager : GameplayElement
 {
     BulletAttributeManager attributeManager = new();
-
     [SerializeField]
     private Vector3 speed = Vector3.forward;
-
-    public void InitializeProjectile(float speed, List<ProjectileAttributes> attributes)
+    private float damage = 0f;
+    public void InitializeProjectile(ProjectileStats stats, List<ProjectileAttributes> attributes)
     {
-        ModifyProjectileSpeed(this.speed * speed);
+        damage = stats.damage;
+        ModifyProjectileSpeed(speed * stats.speed);
         SetUpAttributes(attributes);
     }
 
