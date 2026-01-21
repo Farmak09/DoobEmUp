@@ -18,7 +18,7 @@ public enum Rarity
 public class HazardSpawner : MonoBehaviour
 {
     [SerializeField]
-    private List<Entity> entities;
+    private List<Obstacle> obstacles;
 
     public Stage biome;
     public Rarity rarity;

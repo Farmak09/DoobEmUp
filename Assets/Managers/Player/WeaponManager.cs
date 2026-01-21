@@ -4,7 +4,7 @@ using UnityEngine;
 
 public enum ProjectileAttributes
 {
-    test_1,
+    flammable,
     test_2
 }
 
@@ -18,15 +18,19 @@ public class WeaponManager : PlayerElement
     [SerializeField] private BulletManager projectile;
 
     private bool shoot = false;
+
     public void AddAttributeToWeapon(ProjectileAttributes newAtt)
     {
         activeAttributes.Add(newAtt);
     }
-    // Start is called before the first frame update
+
+
     void Start()
     {
         ResetCooldown();
+        AddAttributeToWeapon(ProjectileAttributes.flammable);
     }
+
     public override void PlayerUpdate()
     {
         weaponCooldown -= Time.deltaTime;

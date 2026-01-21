@@ -46,11 +46,24 @@ public class MovementPlayerVariables
 }
 
 [System.Serializable]
-public class HealthPlayerVariables
+public class HealthVariables
 {
     [SerializeField]
-    private float maxHP;
-    private float currentHP;
+    protected float maxHP;
+    public float currentHP { get; protected set; }
+
+    public void ModifyHP(float value)
+    {
+        currentHP += value;
+        if (currentHP > maxHP)
+            currentHP = maxHP;
+    }
+}
+
+[System.Serializable]
+public class HealthPlayerVariables : HealthVariables
+{
+
     public void ResetVariables(DefaultPlayerStats stats)
     {
         maxHP = stats.health;
@@ -69,53 +82,40 @@ public class ShootingPlayerVariables
     [SerializeField]
     private float minProjectileSpeed;
 
-    private float _damage;
-    public float Damage
+    public float damage { get; private set; }
+    public float cadence { get; private set; }
+    public float speed { get; private set; }
+
+    public void ResetVariables(DefaultPlayerStats stats)
     {
-        get { return _damage; }
+        damage = stats.damage;
+        cadence = stats.cadence;
+        speed = stats.speed;
     }
+
     public void ModifyDamage(float percentage)
     {
-        _damage *= percentage;
-        if (_damage < minDamage)
+        damage *= percentage;
+        if (damage < minDamage)
         {
-            _damage = minDamage;
+            damage = minDamage;
         }
-    }
-
-
-    private float _cadence;
-    public float Cadence
-    {
-        get { return _cadence; }
     }
     public void ModifyCadence(float percentage)
     {
-        _cadence *= percentage;
-        if (_cadence > minAttackSpeed)
+        cadence *= percentage;
+        if (cadence > minAttackSpeed)
         {
-            _cadence = minAttackSpeed;
+            cadence = minAttackSpeed;
         }
-    }
-
-    private float _speed;
-    public float Speed
-    {
-        get { return _speed; }
     }
     public void ModifySpeed(float percentage)
     {
-        _speed *= percentage;
-        if (_speed > minProjectileSpeed)
+        speed *= percentage;
+        if (speed > minProjectileSpeed)
         {
-            _speed = minProjectileSpeed;
+            speed = minProjectileSpeed;
         }
-    }
-    public void ResetVariables(DefaultPlayerStats stats)
-    {
-        _damage = stats.damage;
-        _cadence = stats.cadence;
-        _speed = stats.speed;
     }
 }
 
@@ -144,7 +144,7 @@ public class PlayerStats : ScriptableObject
 
     public ProjectileStats BulletStats()
     {
-        return new ProjectileStats(weapon.Speed, weapon.Cadence, weapon.Damage);
+        return new ProjectileStats(weapon.speed, weapon.cadence, weapon.damage);
     }
 
     public void SetToDefault()

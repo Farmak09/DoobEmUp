@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileStats
 {
-    public ProjectileStats(float speed, float cadence, float damage) {this.speed = speed; this.cadence = cadence; this.damage = damage;}
+    public ProjectileStats(float speed, float cadence, float Damage) {this.speed = speed; this.cadence = cadence; this.damage = damage;}
 
     public float speed { get; private set; }
     public float cadence { get; private set; }
@@ -38,8 +38,8 @@ public class BulletManager : GameplayElement
         {
             switch (attribute)
             {
-                case ProjectileAttributes.test_1:
-                    attributeManager.ActivateAtribute(new Test1Att(attributeManager));
+                case ProjectileAttributes.flammable:
+                    attributeManager.ActivateAtribute(new Flammable(attributeManager));
                     break;
                 case ProjectileAttributes.test_2:
                     attributeManager.ActivateAtribute(new Test2Att(attributeManager));
@@ -57,13 +57,12 @@ public class BulletManager : GameplayElement
     {
         transform.position += Time.deltaTime * speed;
     }
-}
-public interface IAttribute
-{
-    public void OnSpawn();
-    //public void OnUpdate();
-    public void OnEnemyCollision(Collision hitEntity);
-    public void OnEnemyKill();
+
+
+    private void OnTriggerEnter(Collider other)
+    {
+        attributeManager.ObstacleHit(other);
+    }
 }
 
 public class BulletAttributeManager
@@ -79,45 +78,11 @@ public class BulletAttributeManager
             attribute.OnSpawn();
         }
     }
+
+    public void ObstacleHit(Collider obstacle)
+    {
+        if (attributes.Count > 0)
+            attributes.ForEach(x => x.OnObstacleCollision(obstacle));
+    }
 }
 
-public class Test1Att : IAttribute
-{
-    BulletAttributeManager owner;
-
-    public Test1Att(BulletAttributeManager owner) { this.owner = owner; }
-
-    public void OnSpawn()
-    {
-        Debug.Log("test 1 active");
-    }
-    //public void OnUpdate();
-    public void OnEnemyCollision(Collision hitEntity) 
-    { 
-
-    }
-    public void OnEnemyKill()
-    {
-
-    }
-}
-public class Test2Att : IAttribute
-{
-    BulletAttributeManager owner;
-
-    public Test2Att(BulletAttributeManager owner) { this.owner = owner; }
-
-    public void OnSpawn()
-    {
-        Debug.Log("test 2 active");
-    }
-    //public void OnUpdate();
-    public void OnEnemyCollision(Collision hitEntity)
-    {
-
-    }
-    public void OnEnemyKill()
-    {
-
-    }
-}
