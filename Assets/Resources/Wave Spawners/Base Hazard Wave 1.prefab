@@ -44,7 +44,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0403de38bb90b184cb4d5f9e1a581e79, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  entities:
-  - {fileID: 2990764226573995021, guid: 20fae0fb09f4cb447af7f3a5682a5994, type: 3}
-  biome: 1
+  obstacles:
+  - {fileID: 1900433770075928129, guid: b58b15f33dd310049a89e99de18e558e, type: 3}
+  biome: 0
   rarity: 0
+  size: 4
+  density: 100

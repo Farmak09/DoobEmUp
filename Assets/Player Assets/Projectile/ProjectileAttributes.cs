@@ -24,10 +24,11 @@ public class Flammable : IAttribute
     //public void OnUpdate();
     public void OnObstacleCollision(Collider hitObstacle)
     {
+        Obstacle obstacle = hitObstacle.gameObject.GetComponent<Obstacle>();
 
-        if (hitObstacle.gameObject.GetComponent<Obstacle>() != null)
+        if (obstacle != null)
         {
-            hitObstacle.gameObject.GetComponent<Obstacle>().Ignite();
+            obstacle.Ignite();
         }
     }
     public void OnObstacleKill()

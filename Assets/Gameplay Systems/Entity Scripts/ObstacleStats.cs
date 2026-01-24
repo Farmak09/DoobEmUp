@@ -9,10 +9,14 @@ public class ObstacleStats : ScriptableObject
 {
     [SerializeField]
     private HealthVariables health;
+
+    public float movementSpeed;
     [SerializeField]
     private float damageAbsortion;
 
     public float fireDamage;
+
+
 
     public void OnSpawn()
     {
@@ -22,7 +26,6 @@ public class ObstacleStats : ScriptableObject
     public virtual void Hit(float bulletDamage, out bool isLethal, bool bypassArmor = false)
     {
         float finalDamage = -bulletDamage + (bypassArmor ? 0 : damageAbsortion);
-        Debug.Log(finalDamage);
 
         if (finalDamage > 0f) finalDamage = 0f;
 
@@ -34,4 +37,9 @@ public class ObstacleStats : ScriptableObject
         else
             isLethal = false;
     }
+    public bool IsAlive()
+    {
+        return health.currentHP > 0f;
+    }
+
 }

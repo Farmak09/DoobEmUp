@@ -15,10 +15,18 @@ public class Obstacle : GameplayElement
     }
     public override void GameUpdate()
     {
+        if (!stats.IsAlive()) return;
+
         if (conditions.Count > 0)
         {
             conditions.ForEach(x => x.Update());
         }
+        Move();
+    }
+
+    private void Move()
+    {
+        transform.position += stats.movementSpeed * Time.deltaTime * Vector3.back;
     }
 
     public void OnHit(float damage, out bool isLethal)

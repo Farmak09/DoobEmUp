@@ -10,10 +10,10 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b0c36e624f1ec1044bc72d65f116102a, type: 3}
-  m_Name: testEnemy
+  m_Name: test2Enemy
   m_EditorClassIdentifier: 
   health:
-    maxHP: 50
-  movementSpeed: 0.5
-  damageAbsortion: 0
+    maxHP: 100
+  movementSpeed: 0.35
+  damageAbsortion: 1
   fireDamage: 2

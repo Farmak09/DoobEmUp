@@ -7,8 +7,9 @@ using UnityEngine;
 
 public class WaveManager : MonoBehaviour
 {
-    private List<HazardSpawner> hazards;
-    // Start is called before the first frame update
+    private List<HazardSpawner> hazards = new();
+    private float spawnPosition = 6f;
+
     private void Awake()
     {
         hazards = Resources.LoadAll<HazardSpawner>("Wave Spawners").ToList();
@@ -16,10 +17,19 @@ public class WaveManager : MonoBehaviour
 
     public void LoadWave(Stage stage)
     {
-        SelectValidSpawners(stage);
+        while (spawnPosition > -6f)
+        {
+            HazardSpawner chosenSpawner = hazards.Find(x => SelectValidSpawner(stage));
+
+            chosenSpawner.SpawnWave(spawnPosition);
+
+            spawnPosition = chosenSpawner.NextPositionDistance(spawnPosition);
+
+            hazards.Remove(chosenSpawner);
+        }
     }
 
-    private List<HazardSpawner> SelectValidSpawners(Stage stage)
+    private HazardSpawner SelectValidSpawner(Stage stage)
     {
         List<HazardSpawner> validHazards = new();
 
@@ -31,9 +41,15 @@ public class WaveManager : MonoBehaviour
                          randomizedRarity < 90 ? Rarity.Uncommon :
                                                  Rarity.Rare;
 
-            validHazards = hazards.Where(x => x.CheckValidity(rar, stage)).ToList();
+            validHazards = hazards.Where(x => x.CheckValidity(rar, stage, 6f + spawnPosition)).ToList();
+
         }
 
-        return validHazards;
+        return ChooseNextWave(validHazards);
+    }
+
+    private HazardSpawner ChooseNextWave(List<HazardSpawner> options)
+    {
+        return options[Random.Range(0, options.Count())];
     }
 }

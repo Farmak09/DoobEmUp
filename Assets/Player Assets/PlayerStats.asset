@@ -16,7 +16,8 @@ MonoBehaviour:
     maxSpeed: 10
     accel: 5
   health:
-    maxHP: 20
+    maxHP: 100
   weapon:
     minDamage: 0.1
     minAttackSpeed: 1
+    minProjectileSpeed: 0.1

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class ProjectileStats
 {
-    public ProjectileStats(float speed, float cadence, float Damage) {this.speed = speed; this.cadence = cadence; this.damage = damage;}
+    public ProjectileStats(float speed, float cadence, float damage) {this.speed = speed; this.cadence = cadence; this.damage = damage;}
 
     public float speed { get; private set; }
     public float cadence { get; private set; }
@@ -20,6 +20,7 @@ public class BulletManager : GameplayElement
     public void InitializeProjectile(ProjectileStats stats, List<ProjectileAttributes> attributes)
     {
         damage = stats.damage;
+
         ModifyProjectileSpeed(speed * stats.speed);
         SetUpAttributes(attributes);
     }
@@ -61,7 +62,7 @@ public class BulletManager : GameplayElement
 
     private void OnTriggerEnter(Collider other)
     {
-        attributeManager.ObstacleHit(other);
+        attributeManager.ObstacleHit(other, damage);
     }
 }
 
@@ -79,10 +80,33 @@ public class BulletAttributeManager
         }
     }
 
-    public void ObstacleHit(Collider obstacle)
+    public void ObstacleHit(Collider obstacle, float damage)
+    {
+        ApplyDamageToEnemy(obstacle, damage);
+        ApplyOnHitAttributeEffects(obstacle);
+    }
+
+    private void ApplyDamageToEnemy(Collider hitObstacle, float damage)
+    {
+        Obstacle obstacle = hitObstacle.gameObject.GetComponent<Obstacle>();
+
+        obstacle.OnHit(damage, out bool isLethal);
+        if(isLethal)
+        {
+            ApplyOnDeathAttributeEffects();
+        }
+    }
+
+    private void ApplyOnHitAttributeEffects(Collider obstacle)
     {
         if (attributes.Count > 0)
             attributes.ForEach(x => x.OnObstacleCollision(obstacle));
+    }
+
+    private void ApplyOnDeathAttributeEffects()
+    {
+        if (attributes.Count > 0)
+            attributes.ForEach(x => x.OnObstacleKill());
     }
 }
 

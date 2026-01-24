@@ -28,7 +28,7 @@ public class WeaponManager : PlayerElement
     void Start()
     {
         ResetCooldown();
-        AddAttributeToWeapon(ProjectileAttributes.flammable);
+        //AddAttributeToWeapon(ProjectileAttributes.flammable);
     }
 
     public override void PlayerUpdate()
