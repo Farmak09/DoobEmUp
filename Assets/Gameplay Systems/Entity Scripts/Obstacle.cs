@@ -5,13 +5,14 @@ using UnityEngine;
 public class Obstacle : GameplayElement
 {
     [SerializeField]
-    private ObstacleStats stats;
-    private List<ObstacleAltStatus> conditions = new();
+    private ObstacleStats stats = new();
+    [SerializeField]
+    private StaticObstacleStats staticStats;
+    private List<ObstacleAflictions> conditions = new();
 
-    public override void Awake()
+    private void Start()
     {
-        base.Awake();
-        stats.OnSpawn();
+        stats.OnSpawn(staticStats);
     }
     public override void GameUpdate()
     {
@@ -24,14 +25,30 @@ public class Obstacle : GameplayElement
         Move();
     }
 
-    private void Move()
+    protected virtual void Move()
     {
-        transform.position += stats.movementSpeed * Time.deltaTime * Vector3.back;
+        transform.position += staticStats.GetSpeed() * Time.deltaTime * Vector3.back;
+
+        if (CheckForGoal())
+            StealCookie();
+    }
+
+    protected bool CheckForGoal()
+    {
+        return transform.position.z < Global.COOKIE_LINE;
+    }
+
+    private void StealCookie()
+    {
+        GameObject.FindGameObjectWithTag("ServiceProvider").GetComponent<ServiceManager>().gameplay.LoseCookie(staticStats.GetObstacleType());
+        Vanish();
     }
 
     public void OnHit(float damage, out bool isLethal)
     {
-        stats.Hit(damage, out isLethal);
+        stats.Hit(staticStats, damage, out isLethal);
+        if (isLethal)
+            Vanish();
     }
 
     public void Ignite()
@@ -39,13 +56,13 @@ public class Obstacle : GameplayElement
         conditions.Add(new Ignited(this));
     }
 
-    public void RemoveCondition(ObstacleAltStatus condition)
+    public void RemoveCondition(ObstacleAflictions condition)
     {
         conditions.Remove(condition);
     }
 
     public virtual void IgnitionDamage()
     {
-        OnHit(stats.fireDamage, out _);
+        OnHit(staticStats.GetWeakness(Weaknesses.fire), out _);
     }
 }

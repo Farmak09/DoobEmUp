@@ -2,12 +2,12 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface ObstacleAltStatus
+public interface ObstacleAflictions
 {
     public void Update();
 }
 
-public class Ignited : ObstacleAltStatus
+public class Ignited : ObstacleAflictions
 {
     private Obstacle owner;
     private float duration = 5f;

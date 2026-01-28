@@ -63,6 +63,7 @@ public class BulletManager : GameplayElement
     private void OnTriggerEnter(Collider other)
     {
         attributeManager.ObstacleHit(other, damage);
+        Vanish();
     }
 }
 
