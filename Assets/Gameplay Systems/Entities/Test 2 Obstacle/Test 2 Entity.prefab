@@ -119,7 +119,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8683013d8430c6f4eaed917d4d65370d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  staticStats: {fileID: 11400000, guid: d664a4bea2e94ea4fa7e6c3c41355ca1, type: 2}
+  stats:
+    statics: {fileID: 11400000, guid: d664a4bea2e94ea4fa7e6c3c41355ca1, type: 2}
+    currentHP: 3.4028235e+38
 --- !u!54 &-7602161135289173419
 Rigidbody:
   m_ObjectHideFlags: 0

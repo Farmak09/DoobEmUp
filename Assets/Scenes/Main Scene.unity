@@ -681,7 +681,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inputManager: {fileID: 0}
-  stats: {fileID: 11400000, guid: 7c0f6b1bcf0f0a143be55c02acada2be, type: 2}
+  stats:
+    statics: {fileID: 11400000, guid: 35fbe96ecdebc7141a2bbbed417d3c17, type: 2}
+    selected: 0
 --- !u!1 &2116939659
 GameObject:
   m_ObjectHideFlags: 0

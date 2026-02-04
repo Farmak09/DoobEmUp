@@ -13,7 +13,7 @@ public class WeaponManager : PlayerElement
     private List<ProjectileAttributes> activeAttributes = new();
 
     [SerializeField]
-    private float weaponCooldown = 0f;
+    private float weaponCooldown = 1f;
 
     [SerializeField] private BulletManager projectile;
 
@@ -27,7 +27,7 @@ public class WeaponManager : PlayerElement
 
     void Start()
     {
-        ResetCooldown();
+        //ResetCooldown();
         //AddAttributeToWeapon(ProjectileAttributes.flammable);
     }
 
@@ -44,12 +44,12 @@ public class WeaponManager : PlayerElement
 
     private void ResetCooldown()
     {
-        weaponCooldown = player.stats.BulletStats().cadence;
+        weaponCooldown = player.stats.weapon.cadence;
     }
 
     private void Shoot()
     {
-        Instantiate(projectile, this.transform.position, this.transform.rotation).InitializeProjectile(player.stats.BulletStats(), activeAttributes);
+        Instantiate(projectile, this.transform.position, this.transform.rotation).InitializeProjectile(player.stats.weapon, activeAttributes);
     }
 
     private void LateUpdate()

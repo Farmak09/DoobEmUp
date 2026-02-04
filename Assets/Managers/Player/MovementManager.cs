@@ -12,7 +12,7 @@ public class MovementManager : PlayerElement
 
     public override void PlayerUpdate()
     {
-        if (player.stats.Controlled)
+        if (player.stats.selected)
         {
             MovePlayer();
         }
@@ -28,7 +28,7 @@ public class MovementManager : PlayerElement
             {
                 CursorVisibility(false);
 
-                player.stats.Controlled = true;
+                player.stats.selected = true;
             }
         }
     }
@@ -60,6 +60,6 @@ public class MovementManager : PlayerElement
     {
         CursorVisibility(true);
 
-        player.stats.Controlled = false;
+        player.stats.selected = false;
     }
 }

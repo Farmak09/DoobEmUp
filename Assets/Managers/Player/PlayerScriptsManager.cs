@@ -7,7 +7,6 @@ public class PlayerScriptsManager : GameplayElement
     public InputManager inputManager;
     List<PlayerElement> playerElements = new();
 
-    [SerializeField]
     public PlayerStats stats;
 
 
@@ -15,7 +14,12 @@ public class PlayerScriptsManager : GameplayElement
     {
         base.Awake();
         inputManager = GetComponent<InputManager>();
-        stats.SetToDefault();
+        stats.InitializeStats();
+
+    }
+
+    private void Start()
+    {
     }
 
     public override void GameUpdate()

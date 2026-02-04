@@ -36,26 +36,28 @@ public class StaticObstacleStats : ScriptableObject
 [System.Serializable]
 public class ObstacleStats
 {
+    public StaticObstacleStats statics;
+
     [SerializeField]
     private float currentHP = float.MaxValue;
 
-    public void OnSpawn(StaticObstacleStats stats)
+    public void OnSpawn()
     {
-        ModifyHP(stats, float.MaxValue);
+        ModifyHP(float.MaxValue);
     }
 
-    public void ModifyHP(StaticObstacleStats stats, float value)
+    public void ModifyHP(float value)
     {
         currentHP += value;
-        if (currentHP > stats.GetMaxHP()) currentHP = stats.GetMaxHP();
+        if (currentHP > statics.GetMaxHP()) currentHP = statics.GetMaxHP();
     }
-    public virtual void Hit(StaticObstacleStats stats, float bulletDamage, out bool isLethal, bool bypassArmor = false)
+    public virtual void Hit(float bulletDamage, out bool isLethal, bool bypassArmor = false)
     {
-        float finalDamage = -bulletDamage + (bypassArmor ? 0 : stats.GetAbsortion());
+        float finalDamage = -bulletDamage + (bypassArmor ? 0 : statics.GetAbsortion());
 
         if (finalDamage > 0f) finalDamage = 0f;
 
-        ModifyHP(stats, finalDamage);
+        ModifyHP(finalDamage);
 
 
         if (currentHP <= 0f)

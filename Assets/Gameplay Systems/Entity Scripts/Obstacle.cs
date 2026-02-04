@@ -6,13 +6,12 @@ public class Obstacle : GameplayElement
 {
     [SerializeField]
     private ObstacleStats stats = new();
-    [SerializeField]
-    private StaticObstacleStats staticStats;
+
     private List<ObstacleAflictions> conditions = new();
 
     private void Start()
     {
-        stats.OnSpawn(staticStats);
+        stats.OnSpawn();
     }
     public override void GameUpdate()
     {
@@ -27,7 +26,7 @@ public class Obstacle : GameplayElement
 
     protected virtual void Move()
     {
-        transform.position += staticStats.GetSpeed() * Time.deltaTime * Vector3.back;
+        transform.position += stats.statics.GetSpeed() * Time.deltaTime * Vector3.back;
 
         if (CheckForGoal())
             StealCookie();
@@ -40,13 +39,13 @@ public class Obstacle : GameplayElement
 
     private void StealCookie()
     {
-        GameObject.FindGameObjectWithTag("ServiceProvider").GetComponent<ServiceManager>().gameplay.LoseCookie(staticStats.GetObstacleType());
+        GameObject.FindGameObjectWithTag("ServiceProvider").GetComponent<ServiceManager>().gameplay.LoseCookie(stats.statics.GetObstacleType());
         Vanish();
     }
 
     public void OnHit(float damage, out bool isLethal)
     {
-        stats.Hit(staticStats, damage, out isLethal);
+        stats.Hit(damage, out isLethal);
         if (isLethal)
             Vanish();
     }
@@ -63,6 +62,6 @@ public class Obstacle : GameplayElement
 
     public virtual void IgnitionDamage()
     {
-        OnHit(staticStats.GetWeakness(Weaknesses.fire), out _);
+        OnHit(stats.statics.GetWeakness(Weaknesses.fire), out _);
     }
 }
