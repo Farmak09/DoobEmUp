@@ -10,6 +10,12 @@ public enum ProjectileAttributes
 
 public class WeaponManager : PlayerElement
 {
+    public override void Awake()
+    {
+        type = TypeOfPlayerScripts.Weapon;
+        base.Awake();
+    }
+
     private List<ProjectileAttributes> activeAttributes = new();
 
     [SerializeField]
@@ -27,6 +33,8 @@ public class WeaponManager : PlayerElement
 
     void Start()
     {
+        
+
         //ResetCooldown();
         //AddAttributeToWeapon(ProjectileAttributes.flammable);
     }
